@@ -47,16 +47,9 @@ spec:
               value: "{{ .Values.env.ENABLED_OLLAMA }}"
             - name: FEATURE_FLAGS
               value: "{{ .Values.env.FEATURE_FLAGS }}"
-            - name: GOOGLE_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: lobe-chat-secret
-                  key: googleApiKey
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: lobe-chat-secret
-                  key: openaiApiKey
+          envFrom:
+            - secretRef:
+                name: {{ include "lobe-chat.fullname" . }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
