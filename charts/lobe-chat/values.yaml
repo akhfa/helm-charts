@@ -43,7 +43,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3210
 
 ingress:
   enabled: false
@@ -74,6 +74,13 @@ resources:
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+env:
+  OPENAI_MODEL_LIST: "+gpt-4o=advance,+gpt-3.5-turbo=simple"
+  ENABLED_OLLAMA: "0"
+  FEATURE_FLAGS: "-webrtc_sync,-language_model_settings,-openai_api_key,-openai_proxy_url,+create_session,-edit_agent,+dalle,-check_updates,-welcome_suggest"
+  GOOGLE_API_KEY: ""
+  OPENAI_API_KEY: ""
 
 livenessProbe:
   httpGet:

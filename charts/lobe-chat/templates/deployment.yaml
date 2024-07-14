@@ -40,6 +40,23 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: OPENAI_MODEL_LIST
+              value: "{{ .Values.env.OPENAI_MODEL_LIST }}"
+            - name: ENABLED_OLLAMA
+              value: "{{ .Values.env.ENABLED_OLLAMA }}"
+            - name: FEATURE_FLAGS
+              value: "{{ .Values.env.FEATURE_FLAGS }}"
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lobe-chat-secret
+                  key: googleApiKey
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lobe-chat-secret
+                  key: openaiApiKey
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
